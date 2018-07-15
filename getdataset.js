@@ -7,7 +7,7 @@ console.log('Downloading dataset ml-20m.zip');
 const url = 'http://files.grouplens.org/datasets/movielens/ml-20m.zip';
 const download = url => {
     const tmpFilePath = './ml-20m.zip';
-    http.get(url, function (response) {
+    http.get(url, response => {
         response.on('data', data => {
             fs.appendFileSync(tmpFilePath, data);
         });

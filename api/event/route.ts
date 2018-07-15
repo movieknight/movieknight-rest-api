@@ -38,11 +38,11 @@ export const create = (app: restify.Server, namespace: string = ''): void => {
 };
 
 export const read = (app: restify.Server, namespace: string = ''): void => {
-    app.get(`${namespace}/:name`, has_body,
+    app.get(`${namespace}/:id`, has_body,
         (req: restify.Request & IOrmReq, res: restify.Response, next: restify.Next) => {
             req.getOrm().typeorm.connection
                 .getRepository(Event_)
-                .findOne({ title: req.params.name })
+                .findOne({ id: req.params.id })
                 .then((event: Event_) => {
                     if (event == null) return next(new NotFoundError('Event_'));
                     res.json(200, event);
