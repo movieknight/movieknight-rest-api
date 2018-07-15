@@ -8,7 +8,7 @@ as
 
 create or replace view get_liked_movies
 as
-    select m.id as movieID, u.id as userID, m.title, m.release_date, r.rating, r.rated_at from ratings r
+    select m.id as movie_id, u.id as user_id, m.title, m.release_date, r.rating, r.rated_at from ratings r
     join movies m on (m.id = r.movie_id)
     join users u on (u.id = r.user_id)
     where r.rating > 3
@@ -16,7 +16,7 @@ as
 
 create or replace view get_disliked_movies
 as
-    select m.id as movieID, u.id as userID, m.title, m.release_date, r.rating, r.rated_at from ratings r
+    select m.id as movie_id, u.id as user_id, m.title, m.release_date, r.rating, r.rated_at from ratings r
     join movies m on (m.id = r.movie_id)
     join users u on (u.id = r.user_id)
     where r.rating <= 3
