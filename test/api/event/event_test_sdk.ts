@@ -28,7 +28,7 @@ export class EventTestSDK {
 
         expect(event_route.create).to.be.an.instanceOf(Function);
         supertest(this.app)
-            .post(`/api/event/${event.title}`)
+            .post('/api/event')
             .set('Connection', 'keep-alive')
             .set('X-Access-Token', access_token)
             .send(event)

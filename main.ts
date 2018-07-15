@@ -58,6 +58,7 @@ export const setupOrmApp = (models_and_routes: Map<string, any>,
                     callb => authSdk.unregister_all([default_admin], (err: Error & {status: number}) =>
                             callb(err != null && err.status !== 404 ? err : void 0,
                                 'removed default user; next: adding')),
+                    callb => orms_out.typeorm.connection.query('SELECT 6*32').then(() => callb()).catch(callb),
                     callb => authSdk.register_login(default_admin, callb),
                         callb => logger.info(`${app.name} listening from ${app.url}`) || callb(void 0)
                     ], (e: Error) => e == null ? next(void 0, app, orms_out) : raise(e)

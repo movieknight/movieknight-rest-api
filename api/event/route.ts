@@ -17,7 +17,7 @@ const event_schema: JsonSchema = require('./../../test/api/event/schema');
 const zip = (a0: any[], a1: any[]) => a0.map((x, i) => [x, a1[i]]);
 
 export const create = (app: restify.Server, namespace: string = ''): void => {
-    app.post(`${namespace}/:title`, has_auth(), has_body,
+    app.post(namespace, has_auth(), has_body,
         (req: restify.Request & IOrmReq & {user_id: string}, res: restify.Response, next: restify.Next) => {
             const event = new Event_();
             event.id = req.body.id;
