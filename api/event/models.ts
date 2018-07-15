@@ -1,22 +1,22 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('event_tbl')
 export class Event_ {
-    @PrimaryColumn({ type: 'varchar' })
-    id: string;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-    @Column({nullable: false})
+    @Column({ nullable: false })
     title: string;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     description?: string;
 
-    @Column({type: 'boolean'})
+    @Column({ type: 'boolean' })
     public?: boolean;
 
     @Column()
     owner: string;
 
-    @Column('int64')
+    @Column({ type: 'integer', nullable: true })
     user_limit?: number;
 }

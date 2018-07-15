@@ -13,7 +13,7 @@ import { create_and_auth_users } from '../../shared_tests';
 import { AuthTestSDK } from '../auth/auth_test_sdk';
 import { user_mocks } from '../user/user_mocks';
 import { event_mocks } from './event_mocks';
-import { Event_TestSDK } from './event_test_sdk';
+import { EventTestSDK } from './event_test_sdk';
 import { User } from '../../../api/user/models';
 import { after, afterEach, before, describe, it } from 'mocha';
 
@@ -30,7 +30,7 @@ const tapp_name = `test::${basename(__dirname)}`;
 const logger = createLogger({ name: tapp_name });
 
 describe('Event_::routes', () => {
-    let sdk: Event_TestSDK;
+    let sdk: EventTestSDK;
     let auth_sdk: AuthTestSDK;
 
     const mocks: {successes: Event_[], failures: Array<{}>} = event_mocks;
@@ -48,7 +48,7 @@ describe('Event_::routes', () => {
                     _orms_out.orms_out = orms_out;
 
                     auth_sdk = new AuthTestSDK(_app);
-                    sdk = new Event_TestSDK(_app);
+                    sdk = new EventTestSDK(_app);
 
                     return cb(void 0);
                 },

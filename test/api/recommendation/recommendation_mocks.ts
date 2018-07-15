@@ -1,4 +1,3 @@
-import { user_mocks } from '../user/user_mocks';
 import { Recommendation } from '../../../api/recommendation/models';
 import { event_mocks } from '../event/event_mocks';
 
@@ -12,6 +11,7 @@ export const recommendation_mocks: {successes: Recommendation[], failures: Array
         Array(5)
             .fill(null)
             .map((_, idx) => ({
+                id: Math.floor(Math.random() * 1000),
                 event_id: event_mocks.successes[idx].id,
                 imdb_ids: [
                     `imdb-${Math.floor(Math.random() * 1000)}`,

@@ -4,18 +4,18 @@ import { IModelRoute, model_route_to_map } from 'nodejs-utils';
 import { IOrmsOut, tearDownConnections } from 'orm-mw';
 import { basename } from 'path';
 import { Server } from 'restify';
+import { after, before, describe, it } from 'mocha';
 
 import { AccessToken } from '../../../api/auth/models';
 import { Genre } from '../../../api/genre/models';
 import { _orms_out } from '../../../config';
 import { all_models_and_routes_as_mr, setupOrmApp } from '../../../main';
 import { create_and_auth_users } from '../../shared_tests';
-import { AuthTestSDK } from '../auth/auth_test_sdk';
 import { user_mocks } from '../user/user_mocks';
+import { User } from '../../../api/user/models';
+import { AuthTestSDK } from '../auth/auth_test_sdk';
 import { genre_mocks } from './genre_mocks';
 import { GenreTestSDK } from './genre_test_sdk';
-import { User } from '../../../api/user/models';
-import { after, afterEach, before, describe, it } from 'mocha';
 
 const models_and_routes: IModelRoute = {
     user: all_models_and_routes_as_mr['user'],

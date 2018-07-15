@@ -16,7 +16,7 @@ const event_schema = require('./schema.json');
 
 chai.use(chaiJsonSchema);
 
-export class Event_TestSDK {
+export class EventTestSDK {
     constructor(public app) {
     }
 
@@ -24,12 +24,14 @@ export class Event_TestSDK {
                   callback: TCallback<Error | IncomingMessageError, Response>) {
         if (access_token == null) return callback(new TypeError('`access_token` argument to `create` must be defined'));
         else if (event == null) return callback(new TypeError('`event` argument to `create` must be defined'));
+        else if (event.title == null) return callback(new TypeError('`event.title` argument to `create` must be defined'));
 
         expect(event_route.create).to.be.an.instanceOf(Function);
         supertest(this.app)
             .post(`/api/event/${event.title}`)
             .set('Connection', 'keep-alive')
             .set('X-Access-Token', access_token)
+            .send(event)
             .expect('Content-Type', /json/)
             .end((err, res: Response) => {
                 if (err != null) return superEndCb(callback)(err);
@@ -85,7 +87,6 @@ export class Event_TestSDK {
         else if (event.owner == null) return callback(new TypeError('`event.owner` argument to `retrieve` must be defined'));
 
         expect(event_route.read).to.be.an.instanceOf(Function);
-        console.info('Event_TestSDK::retrieve::event =', event, ';');
         supertest(this.app)
             .get(`/api/event/${event.title}_${event.owner}`)
             .set('Connection', 'keep-alive')

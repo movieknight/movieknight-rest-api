@@ -1,12 +1,10 @@
-import { series } from 'async';
-import { fmtError, NotFoundError, restCatch } from 'custom-restify-errors';
+import { NotFoundError, restCatch } from 'custom-restify-errors';
 import { IOrmReq } from 'orm-mw';
 import * as restify from 'restify';
-import { has_body, mk_valid_body_mw_ignore } from 'restify-validators';
+import { has_body } from 'restify-validators';
 import { JsonSchema } from 'tv4';
 
 import { has_auth } from '../auth/middleware';
-import { name_owner_split_mw } from './middleware';
 import { Recommendation } from './models';
 
 const slugify: (s: string) => string = require('slugify');
@@ -21,6 +19,7 @@ export const create = (app: restify.Server, namespace: string = ''): void => {
         (req: restify.Request & IOrmReq & {user_id: string}, res: restify.Response, next: restify.Next) => {
             const recommendation = new Recommendation();
             recommendation.imdb_ids = req.body.imdb_ids;
+            recommendation.event_id = Math.floor(Math.random() * 1000);
 
             req.getOrm().typeorm.connection.manager
                 .save(recommendation)

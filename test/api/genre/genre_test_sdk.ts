@@ -85,7 +85,6 @@ export class GenreTestSDK {
         else if (genre.name == null) return callback(new TypeError('`genre.name` argument to `retrieve` must be defined'));
 
         expect(genre_route.read).to.be.an.instanceOf(Function);
-        console.info('GenreTestSDK::retrieve::genre =', genre, ';');
         supertest(this.app)
             .get(`/api/genre/${genre.name}`)
             .set('Connection', 'keep-alive')

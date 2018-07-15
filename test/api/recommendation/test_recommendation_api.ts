@@ -14,12 +14,13 @@ import { user_mocks } from '../user/user_mocks';
 import { recommendation_mocks } from './recommendation_mocks';
 import { RecommendationTestSDK } from './recommendation_test_sdk';
 import { User } from '../../../api/user/models';
-import { after, afterEach, before, describe, it } from 'mocha';
+import { after, before, describe, it } from 'mocha';
 import { Recommendation } from '../../../api/recommendation/models';
 
 const models_and_routes: IModelRoute = {
     user: all_models_and_routes_as_mr['user'],
     auth: all_models_and_routes_as_mr['auth'],
+    event: all_models_and_routes_as_mr['event'],
     recommendation: all_models_and_routes_as_mr['recommendation']
 };
 

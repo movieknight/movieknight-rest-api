@@ -6,7 +6,6 @@ import * as supertest from 'supertest';
 import { Response } from 'supertest';
 
 import * as recommendation_route from '../../../api/recommendation/route';
-import * as recommendation_routes from '../../../api/recommendation/routes';
 import { User } from '../../../api/user/models';
 import { Recommendation } from '../../../api/recommendation/models';
 
@@ -30,6 +29,7 @@ export class RecommendationTestSDK {
             .post(`/api/recommendation/${recommendation.event_id}`)
             .set('Connection', 'keep-alive')
             .set('X-Access-Token', access_token)
+            .send(recommendation)
             .expect('Content-Type', /json/)
             .end((err, res: Response) => {
                 if (err != null) return superEndCb(callback)(err);
@@ -54,7 +54,6 @@ export class RecommendationTestSDK {
         else if (recommendation.event_id == null) return callback(new TypeError('`recommendation.event_id` argument to `retrieve` must be defined'));
 
         expect(recommendation_route.read).to.be.an.instanceOf(Function);
-        console.info('RecommendationTestSDK::retrieve::recommendation =', recommendation, ';');
         supertest(this.app)
             .get(`/api/recommendation/${recommendation.event_id}`)
             .set('Connection', 'keep-alive')

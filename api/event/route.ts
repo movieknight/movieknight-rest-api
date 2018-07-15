@@ -17,11 +17,13 @@ const event_schema: JsonSchema = require('./../../test/api/event/schema');
 const zip = (a0: any[], a1: any[]) => a0.map((x, i) => [x, a1[i]]);
 
 export const create = (app: restify.Server, namespace: string = ''): void => {
-    app.post(`${namespace}/:name`, has_auth(),
+    app.post(`${namespace}/:title`, has_auth(), has_body,
         (req: restify.Request & IOrmReq & {user_id: string}, res: restify.Response, next: restify.Next) => {
             const event = new Event_();
+            event.id = req.body.id;
             event.title = slugify(req.params.title.replace('_', '-'));
             event.owner = req.user_id;
+            event.public = req.body.public || false;
 
             req.getOrm().typeorm.connection.manager
                 .save(event)
@@ -36,12 +38,11 @@ export const create = (app: restify.Server, namespace: string = ''): void => {
 };
 
 export const read = (app: restify.Server, namespace: string = ''): void => {
-    app.get(`${namespace}/:name_owner`, name_owner_split_mw,
+    app.get(`${namespace}/:name`, has_body, has_auth(),
         (req: restify.Request & IOrmReq, res: restify.Response, next: restify.Next) => {
-            console.info('event::route::read::', { title: req.params.title, owner: req.params.owner }, ';');
             req.getOrm().typeorm.connection
                 .getRepository(Event_)
-                .findOne({ title: req.params.title, owner: req.params.owner })
+                .findOne({ title: req.params.name, owner: req['user_id'] })
                 .then((event: Event_) => {
                     if (event == null) return next(new NotFoundError('Event_'));
                     res.json(200, event);

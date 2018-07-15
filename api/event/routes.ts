@@ -10,7 +10,6 @@ import { Event_ } from './models';
 const event_schema: JsonSchema = require('./../../test/api/event/schema');
 
 export const readAll = (app: restify.Server, namespace: string = ''): void => {
-    console.info(`routes::read::${namespace}s`);
     app.get(`${namespace}s`, has_auth(),
         (req: restify.Request & IOrmReq, res: restify.Response, next: restify.Next) => {
             req.getOrm().typeorm.connection
