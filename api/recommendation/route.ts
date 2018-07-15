@@ -3,7 +3,7 @@ import { IOrmReq } from 'orm-mw';
 import * as restify from 'restify';
 import { has_body } from 'restify-validators';
 import { JsonSchema } from 'tv4';
-import { Recommendation } from './models';
+import { Recommendation, Liked_Movies } from './models';
 
 const slugify: (s: string) => string = require('slugify');
 
@@ -40,6 +40,23 @@ export const read = (app: restify.Server, namespace: string = ''): void => {
                 .then((recommendation: Recommendation) => {
                     if (recommendation == null) return next(new NotFoundError('Recommendation'));
                     res.json(200, recommendation);
+                    return next();
+                })
+                .catch(restCatch(req, res, next));
+        }
+    );
+};
+
+export const get = (app: restify.Server, namespace: string = ''): void => {
+    app.get(`${namespace.replace('recommendation', 'liked')}/liked_movies`, // has_body,
+        (req: restify.Request & IOrmReq & {user_id: string}, res: restify.Response, next: restify.Next) => {
+            req.getOrm().typeorm.connection
+                .getRepository(Liked_Movies)
+                .find({})
+                .then((liked_movies: Liked_Movies[]) => {
+                    if (liked_movies == null || !liked_movies.length)
+                        return next(new NotFoundError('Liked_Movies'));
+                    res.json(200, liked_movies);
                     return next();
                 })
                 .catch(restCatch(req, res, next));

@@ -14,23 +14,23 @@ export class Recommendation {
     imdb_ids: string[];
 }
 
-@Entity('liked_movies_tbl')
+@Entity('get_liked_movies')
 export class Liked_Movies {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn({type: 'integer'})
     movie_id: number;
 
-    @Column()
+    @Column({type: 'integer'})
     user_id: number;
 
-    @Column()
+    @Column({type: 'varchar', length: 255})
     title: string;
 
-    @Column()
+    @Column({type: 'date'})
     release_date: string;
 
-    @Column()
+    @Column({type: 'integer'})
     rating: number;
 
-    @Column()
+    @Column({type: 'timestamp without time zone'})
     rated_at: string;
 }
