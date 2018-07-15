@@ -14,6 +14,7 @@
     "test": "mocha test --recursive"
   },
   "dependencies": {
+    "adm-zip": "^0.4.11",
     "argon2": "^0.19.3",
     "async": "^2.6.1",
     "bunyan": "^1.8.12",
@@ -38,6 +39,7 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "@types/adm-zip": "^0.4.31",
     "@types/async": "^2.0.49",
     "@types/bunyan": "1.8.4",
     "@types/chai": "^4.1.4",
