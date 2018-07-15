@@ -17,12 +17,12 @@ const event_schema: JsonSchema = require('./../../test/api/event/schema');
 const zip = (a0: any[], a1: any[]) => a0.map((x, i) => [x, a1[i]]);
 
 export const create = (app: restify.Server, namespace: string = ''): void => {
-    app.post(namespace, has_auth(), has_body,
+    app.post(namespace, has_body,
         (req: restify.Request & IOrmReq & {user_id: string}, res: restify.Response, next: restify.Next) => {
             const event = new Event_();
             event.id = req.body.id;
             event.title = slugify(req.params.title.replace('_', '-'));
-            event.owner = req.user_id;
+            event.owner = req.user_id || 'anon';
             event.public = req.body.public || false;
 
             req.getOrm().typeorm.connection.manager
@@ -38,7 +38,7 @@ export const create = (app: restify.Server, namespace: string = ''): void => {
 };
 
 export const read = (app: restify.Server, namespace: string = ''): void => {
-    app.get(`${namespace}/:name`, has_body, has_auth(),
+    app.get(`${namespace}/:name`, has_body,
         (req: restify.Request & IOrmReq, res: restify.Response, next: restify.Next) => {
             req.getOrm().typeorm.connection
                 .getRepository(Event_)

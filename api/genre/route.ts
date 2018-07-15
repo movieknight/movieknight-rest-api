@@ -2,8 +2,6 @@ import { NotFoundError, restCatch } from 'custom-restify-errors';
 import { IOrmReq } from 'orm-mw';
 import * as restify from 'restify';
 import { JsonSchema } from 'tv4';
-
-import { has_auth } from '../auth/middleware';
 import { Genre } from './models';
 
 const slugify: (s: string) => string = require('slugify');
@@ -14,7 +12,7 @@ const genre_schema: JsonSchema = require('./../../test/api/genre/schema');
 const zip = (a0: any[], a1: any[]) => a0.map((x, i) => [x, a1[i]]);
 
 export const create = (app: restify.Server, namespace: string = ''): void => {
-    app.post(`${namespace}/:name`, has_auth(),
+    app.post(`${namespace}/:name`,
         (req: restify.Request & IOrmReq & {user_id: string}, res: restify.Response, next: restify.Next) => {
             const genre = new Genre();
             genre.name = slugify(req.params.name.replace('_', '-'));

@@ -3,8 +3,6 @@ import { IOrmReq } from 'orm-mw';
 import * as restify from 'restify';
 import { has_body } from 'restify-validators';
 import { JsonSchema } from 'tv4';
-
-import { has_auth } from '../auth/middleware';
 import { Recommendation } from './models';
 
 const slugify: (s: string) => string = require('slugify');
@@ -15,7 +13,7 @@ const recommendation_schema: JsonSchema = require('./../../test/api/recommendati
 const zip = (a0: any[], a1: any[]) => a0.map((x, i) => [x, a1[i]]);
 
 export const create = (app: restify.Server, namespace: string = ''): void => {
-    app.post(`${namespace}/:name`, has_auth(), has_body,
+    app.post(`${namespace}/:name`, has_body,
         (req: restify.Request & IOrmReq & {user_id: string}, res: restify.Response, next: restify.Next) => {
             const recommendation = new Recommendation();
             recommendation.imdb_ids = req.body.imdb_ids;
