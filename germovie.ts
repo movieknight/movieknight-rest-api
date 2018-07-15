@@ -3,6 +3,32 @@ import * as g from 'ger';
 const esm = new g.MemESM();
 const ger = new g.GER(esm);
 
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+
+export const _dependencies = ['event'];
+
+@Entity('liked_movies_tbl')
+export class Liked_Movies {
+    @PrimaryGeneratedColumn()
+    movie_id: number;
+
+    @Column()
+    user_id: number;
+
+    @Column()
+    title: string;
+
+    @Column()
+    release_date: string;
+
+    @Column()
+    rating: number;
+
+    @Column()
+    rated_at: string;
+}
+
+
 ger.initialize_namespace('movies')
     .then(() => ger.events([
             {
