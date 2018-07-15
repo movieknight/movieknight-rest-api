@@ -88,7 +88,7 @@ export class EventTestSDK {
 
         expect(event_route.read).to.be.an.instanceOf(Function);
         supertest(this.app)
-            .get(`/api/event/${event.title}_${event.owner}`)
+            .get(`/api/event/${event.id}`)
             .set('Connection', 'keep-alive')
             .set('X-Access-Token', access_token)
             .expect('Content-Type', /json/)
