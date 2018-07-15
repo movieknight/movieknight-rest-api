@@ -5,7 +5,7 @@ export class Event_ {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ nullable: false })
+    @Column({ nullable: false, unique: true })
     title: string;
 
     @Column({ nullable: true })

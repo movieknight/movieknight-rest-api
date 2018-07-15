@@ -42,7 +42,7 @@ export const read = (app: restify.Server, namespace: string = ''): void => {
         (req: restify.Request & IOrmReq, res: restify.Response, next: restify.Next) => {
             req.getOrm().typeorm.connection
                 .getRepository(Event_)
-                .findOne({ title: req.params.name, owner: req['user_id'] })
+                .findOne({ title: req.params.name })
                 .then((event: Event_) => {
                     if (event == null) return next(new NotFoundError('Event_'));
                     res.json(200, event);
