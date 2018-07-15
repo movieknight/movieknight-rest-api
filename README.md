@@ -1,8 +1,7 @@
 movieknight-rest-api
 ====================
 
-Simple baseline scaffold to get you started using [TypeORM](https://github.com/typeorm/typeorm) and/or [Sequelize](https://github.com/sequelize/sequelize) and/or [Waterline](https://github.com/balderdashy/waterline) on [restify](https://github.com/restify/node-restify) with [TypeScript](https://github.com/Microsoft/TypeScript).
-
+MovieKnight REST API
 
 ## Install prerequisites
 
