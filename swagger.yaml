@@ -114,6 +114,25 @@ paths:
           schema:
             $ref: '#/definitions/Error'
 definitions:
+  Event:
+    type: object
+    properties:
+      id:
+        type: string
+      title:
+        type: string
+      description:
+        type: string
+      public:
+        type: boolean
+        default: false
+      owner: 
+        type: string
+      user_limit:
+        type: integer
+        format: int32
+    xml:
+      name: Event
   User:
     type: object
     properties:
@@ -126,6 +145,31 @@ definitions:
     required:
       - email
       - password
+  Genre:
+    type: object
+    properties:
+      name:
+        type: string
+    xml:
+      name: Genre
+  Movie:
+    type: object
+    properties:
+      imbd_id:
+        type: string
+    xml:
+      name: Movie
+  Recommandation:
+    type: object
+    properties:
+      imbd_ids:
+        type: array
+        items:
+          type: string
+      event_id:
+        type: string
+    xml:
+      name: Recommandation
   Token:
     type: object
     properties:
