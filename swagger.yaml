@@ -135,9 +135,6 @@ paths:
         405:
           description: "Invalid input"
       security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
   /event/{eventId}:
     get:
       summary: "Find event by ID"
@@ -185,9 +182,6 @@ paths:
         405:
           description: "Invalid input"
       security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
   /genre/{genreName}:
     get:
       summary: "Find genre by name"
@@ -235,9 +229,6 @@ paths:
         405:
           description: "Invalid input"
       security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
   /movie/{imbd_id}:
     get:
       summary: "Find movie by imbd_id"
@@ -285,9 +276,6 @@ paths:
         405:
           description: "Invalid input"
       security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
   /recommendation/{imbd_id}:
     get:
       tags:
