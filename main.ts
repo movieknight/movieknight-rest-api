@@ -10,6 +10,8 @@ import { AuthTestSDK } from './test/api/auth/auth_test_sdk';
 import { User } from './api/user/models';
 import * as config from './config';
 import { getOrmMwConfig } from './config';
+import * as https from 'https';
+import { IncomingMessage } from 'http';
 
 /* tslint:disable:no-var-requires */
 export const package_ = Object.freeze(require('./package'));
@@ -58,7 +60,28 @@ export const setupOrmApp = (models_and_routes: Map<string, any>,
                     callb => authSdk.unregister_all([default_admin], (err: Error & {status: number}) =>
                             callb(err != null && err.status !== 404 ? err : void 0,
                                 'removed default user; next: adding')),
-                    callb => orms_out.typeorm.connection.query('SELECT 6*32').then(() => callb()).catch(callb),
+                    callb =>
+                        orms_out.typeorm.connection.query('SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name = \'movies\');')
+                            .then(res => res[0].exists ? callb()
+                                : https.get('https://raw.githubusercontent.com/ankane/movielens.sql/master/movielens.sql',
+                                    (r: IncomingMessage) => {
+
+                                        // Buffer the body entirely for processing as a whole.
+                                        const bodyChunks = [];
+                                        r
+                                            .on('data', chunk => {
+                                                // You can process streamed parts here...
+                                                bodyChunks.push(chunk);
+                                            })
+                                            .on('end', () => {
+                                                const body = Buffer.concat(bodyChunks);
+                                                orms_out.typeorm.connection.query(body.toString())
+                                                    .then(() => callb())
+                                                    .catch(callb);
+                                            })
+                                    }))
+
+                            .catch(callb),
                     callb => authSdk.register_login(default_admin, callb),
                         callb => logger.info(`${app.name} listening from ${app.url}`) || callb(void 0)
                     ], (e: Error) => e == null ? next(void 0, app, orms_out) : raise(e)

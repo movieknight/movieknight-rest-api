@@ -13,3 +13,24 @@ export class Recommendation {
     @Column('simple-array', { nullable: false })
     imdb_ids: string[];
 }
+
+@Entity('liked_movies_tbl')
+export class Liked_Movies {
+    @PrimaryGeneratedColumn()
+    movie_id: number;
+
+    @Column()
+    user_id: number;
+
+    @Column()
+    title: string;
+
+    @Column()
+    release_date: string;
+
+    @Column()
+    rating: number;
+
+    @Column()
+    rated_at: string;
+}
