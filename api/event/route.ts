@@ -21,7 +21,7 @@ export const create = (app: restify.Server, namespace: string = ''): void => {
         (req: restify.Request & IOrmReq & {user_id: string}, res: restify.Response, next: restify.Next) => {
             const event = new Event_();
             event.id = req.body.id;
-            event.title = slugify(req.params.title.replace('_', '-'));
+            event.title = slugify(req.body.title.replace('_', '-'));
             event.owner = req.user_id || 'anon';
             event.public = req.body.public || false;
 
